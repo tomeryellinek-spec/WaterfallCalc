@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+backend/venv/
+backend/__pycache__/
+backend/last_parsed_input.txt
+backend/last_parsed_output.json
+*.pyc
+.DS_Store
+Thumbs.db
