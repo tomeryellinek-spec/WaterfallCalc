@@ -114,18 +114,18 @@ export default function WaterfallFlow({ result }: Props) {
     if (!data) return null;
 
     return (
-      <div className="rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-lg">
-        <p className="text-sm font-semibold text-slate-800">{data.name}</p>
-        <p className="text-sm text-slate-600">
+      <div className="rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 shadow-lg">
+        <p className="text-sm font-semibold text-slate-100">{data.name}</p>
+        <p className="text-sm text-slate-300">
           Amount: <span className="font-mono font-medium">{fmtFull(Math.round(data.value))}</span>
         </p>
         {data.type !== 'total' && data.type !== 'Remaining' && (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-400">
             {((data.value / valuation) * 100).toFixed(1)}% of proceeds
           </p>
         )}
         {data.type !== 'total' && data.type !== 'Remaining' && (
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Remaining after: {fmtFull(Math.round(data.total))}
           </p>
         )}
@@ -138,7 +138,7 @@ export default function WaterfallFlow({ result }: Props) {
       {/* Valuation selector */}
       {result.valuations.length > 1 && (
         <div className="flex items-center gap-4">
-          <label className="text-sm font-medium text-slate-700">Select valuation:</label>
+          <label className="text-sm font-medium text-slate-300">Select valuation:</label>
           <input
             type="range"
             min={0}
@@ -147,23 +147,23 @@ export default function WaterfallFlow({ result }: Props) {
             onChange={(e) => setSelectedValIdx(+e.target.value)}
             className="flex-1 max-w-md"
           />
-          <span className="rounded-md bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 font-mono">
+          <span className="rounded-md bg-blue-900/50 px-3 py-1.5 text-sm font-semibold text-blue-300 font-mono">
             {fmt(valuation)}
           </span>
         </div>
       )}
 
       {/* Waterfall chart */}
-      <div className="rounded-lg border border-slate-200 bg-white p-4">
-        <h3 className="mb-2 text-sm font-semibold text-slate-700">
+      <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
+        <h3 className="mb-2 text-sm font-semibold text-slate-200">
           Proceeds Waterfall at {fmt(valuation)}
         </h3>
-        <p className="mb-4 text-xs text-slate-500">
+        <p className="mb-4 text-xs text-slate-400">
           Shows how total proceeds flow through the priority stack, from most senior to most junior.
         </p>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={bars} barSize={60}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
             <XAxis
               dataKey="name"
               tick={{ fontSize: 11 }}
@@ -197,18 +197,18 @@ export default function WaterfallFlow({ result }: Props) {
           .map((bar) => (
             <div
               key={bar.name}
-              className="rounded-lg border border-slate-200 bg-white p-4"
+              className="rounded-lg border border-slate-700 bg-slate-800 p-4"
             >
               <div className="flex items-center gap-2 mb-2">
                 <div
                   className="h-3 w-3 rounded-full"
                   style={{ backgroundColor: SERIES_COLORS[bar.type] || '#94a3b8' }}
                 />
-                <span className="text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                   {bar.name}
                 </span>
               </div>
-              <p className="text-lg font-bold font-mono text-slate-800">
+              <p className="text-lg font-bold font-mono text-slate-100">
                 {fmtFull(Math.round(bar.value))}
               </p>
               <p className="text-xs text-slate-500 mt-1">
@@ -219,34 +219,34 @@ export default function WaterfallFlow({ result }: Props) {
       </div>
 
       {/* Flow table */}
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      <div className="overflow-x-auto rounded-lg border border-slate-700">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <tr className="bg-slate-800">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Priority
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Series
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Amount Received
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
                 % of Total
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Remaining After
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-800">
             {bars
               .filter((b) => b.type !== 'total')
               .map((bar, i) => (
-                <tr key={bar.name} className="hover:bg-slate-50">
+                <tr key={bar.name} className="hover:bg-slate-800/50">
                   <td className="px-4 py-2.5 text-slate-500 font-mono">{i + 1}</td>
-                  <td className="px-4 py-2.5 font-medium text-slate-800">
+                  <td className="px-4 py-2.5 font-medium text-slate-200">
                     <div className="flex items-center gap-2">
                       <div
                         className="h-2.5 w-2.5 rounded-full flex-shrink-0"
@@ -255,13 +255,13 @@ export default function WaterfallFlow({ result }: Props) {
                       {bar.name}
                     </div>
                   </td>
-                  <td className="px-4 py-2.5 text-right font-mono text-slate-700">
+                  <td className="px-4 py-2.5 text-right font-mono text-slate-300">
                     {fmtFull(Math.round(bar.value))}
                   </td>
-                  <td className="px-4 py-2.5 text-right font-mono text-slate-500">
+                  <td className="px-4 py-2.5 text-right font-mono text-slate-400">
                     {((bar.value / valuation) * 100).toFixed(1)}%
                   </td>
-                  <td className="px-4 py-2.5 text-right font-mono text-slate-500">
+                  <td className="px-4 py-2.5 text-right font-mono text-slate-400">
                     {fmtFull(Math.round(bar.total))}
                   </td>
                 </tr>

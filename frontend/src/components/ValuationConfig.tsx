@@ -1,7 +1,7 @@
 import type { ValuationConfig as Config } from '../types';
 
 const inputCls =
-  'w-full rounded border border-slate-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none';
+  'w-full rounded border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none placeholder-slate-500';
 
 interface Props {
   config: Config;
@@ -38,7 +38,7 @@ export default function ValuationConfig({ config, onChange }: Props) {
 
       {config.mode === 'single' ? (
         <div className="max-w-xs">
-          <label className="mb-1 block text-xs font-medium text-slate-600">
+          <label className="mb-1 block text-xs font-medium text-slate-400">
             Transaction Value ($)
           </label>
           <input
@@ -52,7 +52,7 @@ export default function ValuationConfig({ config, onChange }: Props) {
       ) : (
         <div className="grid max-w-2xl grid-cols-3 gap-4">
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Min ($)</label>
+            <label className="mb-1 block text-xs font-medium text-slate-400">Min ($)</label>
             <input
               className={inputCls}
               type="number"
@@ -62,7 +62,7 @@ export default function ValuationConfig({ config, onChange }: Props) {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Max ($)</label>
+            <label className="mb-1 block text-xs font-medium text-slate-400">Max ($)</label>
             <input
               className={inputCls}
               type="number"
@@ -72,7 +72,7 @@ export default function ValuationConfig({ config, onChange }: Props) {
             />
           </div>
           <div>
-            <label className="mb-1 block text-xs font-medium text-slate-600">Steps</label>
+            <label className="mb-1 block text-xs font-medium text-slate-400">Steps</label>
             <input
               className={inputCls}
               type="number"
@@ -86,7 +86,7 @@ export default function ValuationConfig({ config, onChange }: Props) {
       )}
 
       <div className="max-w-xs">
-        <label className="mb-1 block text-xs font-medium text-slate-600">
+        <label className="mb-1 block text-xs font-medium text-slate-400">
           Transaction Costs ($)
         </label>
         <input

@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Calculator, FileUp, Edit3, Settings, BarChart3, Trash2, GitBranch } from 'lucide-react';
+import { FileUp, Edit3, Settings, BarChart3, Trash2, GitBranch, Calculator } from 'lucide-react';
 import DocumentUpload from './components/DocumentUpload';
 import DataEditor from './components/DataEditor';
 import ValuationConfigComponent from './components/ValuationConfig';
@@ -114,29 +114,27 @@ export default function App() {
     data.warrants.length;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-950">
       {/* Header */}
-      <header className="border-b border-slate-200 bg-white">
+      <header className="border-b border-slate-800 bg-slate-900">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600">
-              <Calculator className="h-5 w-5 text-white" />
-            </div>
+            <img src="/logo.png" alt="Cascade" className="h-9 w-9 rounded-lg object-cover" />
             <div>
-              <h1 className="text-lg font-bold text-slate-900">Waterfall Calculator</h1>
-              <p className="text-xs text-slate-500">Transaction Consideration Analysis</p>
+              <h1 className="text-lg font-bold text-slate-100">Cascade</h1>
+              <p className="text-xs text-slate-400">M&A Waterfall Calculator</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             {instrumentCount > 0 && (
-              <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700">
+              <span className="rounded-full bg-blue-900/50 px-3 py-1 text-xs font-medium text-blue-300">
                 {instrumentCount} instrument{instrumentCount !== 1 ? 's' : ''} loaded
               </span>
             )}
             {instrumentCount > 0 && (
               <button
                 onClick={handleClearData}
-                className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
+                className="inline-flex items-center gap-1 rounded-md px-2.5 py-1.5 text-xs font-medium text-red-400 hover:bg-red-900/30 transition-colors"
               >
                 <Trash2 className="h-3.5 w-3.5" />
                 Clear Data
@@ -148,7 +146,7 @@ export default function App() {
 
       <div className="mx-auto max-w-7xl px-6 py-6">
         {/* Navigation */}
-        <nav className="mb-6 flex gap-1 rounded-lg bg-white p-1 shadow-sm border border-slate-200">
+        <nav className="mb-6 flex gap-1 rounded-lg bg-slate-900 p-1 border border-slate-800">
           {sections.map((s) => (
             <button
               key={s.key}
@@ -156,7 +154,7 @@ export default function App() {
               className={`flex flex-1 items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors ${
                 activeSection === s.key
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
               }`}
             >
               {s.icon}
@@ -166,13 +164,13 @@ export default function App() {
         </nav>
 
         {/* Content */}
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
           {activeSection === 'upload' && (
             <div>
-              <h2 className="mb-4 text-base font-semibold text-slate-800">
+              <h2 className="mb-4 text-base font-semibold text-slate-100">
                 Upload Documents
               </h2>
-              <p className="mb-4 text-sm text-slate-500">
+              <p className="mb-4 text-sm text-slate-400">
                 Upload cap tables, loan agreements, SAFE documents, warrants, or option plans.
                 AI will extract structured data for the waterfall calculation.
               </p>
@@ -182,10 +180,10 @@ export default function App() {
 
           {activeSection === 'data' && (
             <div>
-              <h2 className="mb-4 text-base font-semibold text-slate-800">
+              <h2 className="mb-4 text-base font-semibold text-slate-100">
                 Instrument Data
               </h2>
-              <p className="mb-4 text-sm text-slate-500">
+              <p className="mb-4 text-sm text-slate-400">
                 Review and edit the data below. You can add instruments manually or modify
                 data imported from documents.
               </p>
@@ -195,10 +193,10 @@ export default function App() {
 
           {activeSection === 'valuation' && (
             <div>
-              <h2 className="mb-4 text-base font-semibold text-slate-800">
+              <h2 className="mb-4 text-base font-semibold text-slate-100">
                 Valuation Configuration
               </h2>
-              <p className="mb-4 text-sm text-slate-500">
+              <p className="mb-4 text-sm text-slate-400">
                 Set a single transaction value or a range to see the waterfall at multiple
                 valuations.
               </p>
@@ -208,13 +206,13 @@ export default function App() {
 
           {activeSection === 'results' && (
             <div>
-              <h2 className="mb-4 text-base font-semibold text-slate-800">
+              <h2 className="mb-4 text-base font-semibold text-slate-100">
                 Waterfall Results
               </h2>
               {result ? (
                 <WaterfallTable result={result} />
               ) : (
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-400">
                   No results yet. Configure your data and valuation, then calculate.
                 </p>
               )}
@@ -223,13 +221,13 @@ export default function App() {
 
           {activeSection === 'flow' && (
             <div>
-              <h2 className="mb-4 text-base font-semibold text-slate-800">
+              <h2 className="mb-4 text-base font-semibold text-slate-100">
                 Waterfall Flow
               </h2>
               {result ? (
                 <WaterfallFlow result={result} />
               ) : (
-                <p className="text-sm text-slate-500">
+                <p className="text-sm text-slate-400">
                   No results yet. Calculate first to see the waterfall flow.
                 </p>
               )}
@@ -247,7 +245,7 @@ export default function App() {
               <Calculator className="h-4 w-4" />
               Calculate Waterfall
             </button>
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-red-400">{error}</p>}
           </div>
         )}
       </div>

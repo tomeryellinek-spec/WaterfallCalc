@@ -159,8 +159,8 @@ export default function WaterfallTable({ result }: Props) {
             onClick={() => setViewMode('amount')}
             className={`rounded px-3 py-1.5 text-xs font-medium ${
               viewMode === 'amount'
-                ? 'bg-blue-100 text-blue-700'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-blue-900/50 text-blue-300'
+                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
             }`}
           >
             Amounts
@@ -169,8 +169,8 @@ export default function WaterfallTable({ result }: Props) {
             onClick={() => setViewMode('percent')}
             className={`rounded px-3 py-1.5 text-xs font-medium ${
               viewMode === 'percent'
-                ? 'bg-blue-100 text-blue-700'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-blue-900/50 text-blue-300'
+                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
             }`}
           >
             Percentages
@@ -187,13 +187,13 @@ export default function WaterfallTable({ result }: Props) {
 
       {/* Chart */}
       {result.valuations.length > 1 && (
-        <div className="rounded-lg border border-slate-200 bg-white p-4">
-          <h3 className="mb-4 text-sm font-semibold text-slate-700">
+        <div className="rounded-lg border border-slate-700 bg-slate-800 p-4">
+          <h3 className="mb-4 text-sm font-semibold text-slate-200">
             Proceeds Distribution by Valuation
           </h3>
           <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis
                 dataKey="valuation"
                 tickFormatter={fmt}
@@ -223,43 +223,43 @@ export default function WaterfallTable({ result }: Props) {
       )}
 
       {/* Summary by Series */}
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      <div className="overflow-x-auto rounded-lg border border-slate-700">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-100">
-              <th className="sticky left-0 z-10 bg-slate-100 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <tr className="bg-slate-800">
+              <th className="sticky left-0 z-10 bg-slate-800 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Series / Instrument
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Inv. PPS
               </th>
               {result.valuations.map((v) => (
                 <th
                   key={v}
-                  className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500"
+                  className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400"
                 >
                   {fmt(v)}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-800">
             {seriesSummary.map((row, ri) => (
-              <tr key={`${row.type}-${row.label}-${ri}`} className="hover:bg-slate-50">
-                <td className="sticky left-0 z-10 bg-white px-4 py-2.5 font-medium text-slate-800">
+              <tr key={`${row.type}-${row.label}-${ri}`} className="hover:bg-slate-800/50">
+                <td className="sticky left-0 z-10 bg-slate-900 px-4 py-2.5 font-medium text-slate-200">
                   <span
                     className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${instrumentColor(row.type)}`}
                   >
                     {row.label}
                   </span>
                 </td>
-                <td className="px-4 py-2.5 text-right font-mono text-slate-500">
+                <td className="px-4 py-2.5 text-right font-mono text-slate-400">
                   {row.investmentPPS !== null
                     ? '$' + row.investmentPPS.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })
                     : '—'}
                 </td>
                 {row.amounts.map((amt, vi) => (
-                  <td key={vi} className="px-4 py-2.5 text-right font-mono text-slate-700">
+                  <td key={vi} className="px-4 py-2.5 text-right font-mono text-slate-300">
                     <div>
                       {viewMode === 'amount'
                         ? fmtFull(Math.round(amt))
@@ -275,7 +275,7 @@ export default function WaterfallTable({ result }: Props) {
                       </div>
                     )}
                     {row.considerationPPS[vi] !== null && (
-                      <div className="text-[10px] font-sans mt-0.5 text-slate-400">
+                      <div className="text-[10px] font-sans mt-0.5 text-slate-500">
                         PPS: ${ row.considerationPPS[vi]!.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
                       </div>
                     )}
@@ -285,24 +285,24 @@ export default function WaterfallTable({ result }: Props) {
             ))}
           </tbody>
           <tfoot>
-            <tr className="bg-blue-50 font-semibold">
-              <td className="sticky left-0 z-10 bg-blue-50 px-4 py-3 text-blue-800">
+            <tr className="bg-blue-900/30 font-semibold">
+              <td className="sticky left-0 z-10 bg-blue-900/30 px-4 py-3 text-blue-300">
                 Common PPS
               </td>
               <td className="px-4 py-3"></td>
               {result.commonPPS.map((pps, i) => (
-                <td key={i} className="px-4 py-3 text-right font-mono text-blue-800">
+                <td key={i} className="px-4 py-3 text-right font-mono text-blue-300">
                   {'$' + pps.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 })}
                 </td>
               ))}
             </tr>
-            <tr className="bg-slate-100 font-semibold">
-              <td className="sticky left-0 z-10 bg-slate-100 px-4 py-3 text-slate-800">
+            <tr className="bg-slate-800 font-semibold">
+              <td className="sticky left-0 z-10 bg-slate-800 px-4 py-3 text-slate-200">
                 TOTAL
               </td>
               <td className="px-4 py-3"></td>
               {totals.map((t, i) => (
-                <td key={i} className="px-4 py-3 text-right font-mono text-slate-800">
+                <td key={i} className="px-4 py-3 text-right font-mono text-slate-200">
                   {viewMode === 'amount' ? fmtFull(Math.round(t)) : '100%'}
                 </td>
               ))}
@@ -312,34 +312,34 @@ export default function WaterfallTable({ result }: Props) {
       </div>
 
       {/* Detailed Table by Owner */}
-      <h3 className="text-sm font-semibold text-slate-700">Detail by Stakeholder</h3>
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      <h3 className="text-sm font-semibold text-slate-200">Detail by Stakeholder</h3>
+      <div className="overflow-x-auto rounded-lg border border-slate-700">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-slate-50">
-              <th className="sticky left-0 z-10 bg-slate-50 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+            <tr className="bg-slate-800">
+              <th className="sticky left-0 z-10 bg-slate-800 px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Stakeholder
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-400">
                 Instrument
               </th>
               {result.valuations.map((v) => (
                 <th
                   key={v}
-                  className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500"
+                  className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-400"
                 >
                   {fmt(v)}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-800">
             {result.aggregated.map((row, ri) => (
-              <tr key={ri} className="hover:bg-slate-50">
-                <td className="sticky left-0 z-10 bg-white px-4 py-2.5 font-medium text-slate-800">
+              <tr key={ri} className="hover:bg-slate-800/50">
+                <td className="sticky left-0 z-10 bg-slate-900 px-4 py-2.5 font-medium text-slate-200">
                   {row.stakeholderName}
                 </td>
-                <td className="px-4 py-2.5 text-slate-500">
+                <td className="px-4 py-2.5 text-slate-400">
                   <span
                     className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${
                       instrumentColor(row.instrumentType)
@@ -349,7 +349,7 @@ export default function WaterfallTable({ result }: Props) {
                   </span>
                 </td>
                 {row.amounts.map((amt, vi) => (
-                  <td key={vi} className="px-4 py-2.5 text-right font-mono text-slate-700">
+                  <td key={vi} className="px-4 py-2.5 text-right font-mono text-slate-300">
                     {viewMode === 'amount'
                       ? fmtFull(Math.round(amt))
                       : totals[vi] > 0
@@ -361,13 +361,13 @@ export default function WaterfallTable({ result }: Props) {
             ))}
           </tbody>
           <tfoot>
-            <tr className="bg-slate-50 font-semibold">
-              <td className="sticky left-0 z-10 bg-slate-50 px-4 py-3 text-slate-800">
+            <tr className="bg-slate-800 font-semibold">
+              <td className="sticky left-0 z-10 bg-slate-800 px-4 py-3 text-slate-200">
                 TOTAL
               </td>
               <td className="px-4 py-3"></td>
               {totals.map((t, i) => (
-                <td key={i} className="px-4 py-3 text-right font-mono text-slate-800">
+                <td key={i} className="px-4 py-3 text-right font-mono text-slate-200">
                   {viewMode === 'amount' ? fmtFull(Math.round(t)) : '100%'}
                 </td>
               ))}
@@ -382,18 +382,18 @@ export default function WaterfallTable({ result }: Props) {
 function instrumentColor(type: string): string {
   switch (type) {
     case 'Senior Debt':
-      return 'bg-red-100 text-red-700';
+      return 'bg-red-900/50 text-red-300';
     case 'SAFE':
-      return 'bg-amber-100 text-amber-700';
+      return 'bg-amber-900/50 text-amber-300';
     case 'Preferred':
-      return 'bg-purple-100 text-purple-700';
+      return 'bg-purple-900/50 text-purple-300';
     case 'Common':
-      return 'bg-blue-100 text-blue-700';
+      return 'bg-blue-900/50 text-blue-300';
     case 'Options':
-      return 'bg-emerald-100 text-emerald-700';
+      return 'bg-emerald-900/50 text-emerald-300';
     case 'Warrants':
-      return 'bg-cyan-100 text-cyan-700';
+      return 'bg-cyan-900/50 text-cyan-300';
     default:
-      return 'bg-slate-100 text-slate-700';
+      return 'bg-slate-800 text-slate-300';
   }
 }

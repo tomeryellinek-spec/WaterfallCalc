@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  @apply bg-slate-50 text-slate-900;
+  @apply bg-slate-950 text-slate-100;
 }
 
 input[type='number']::-webkit-inner-spin-button,

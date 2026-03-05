@@ -20,12 +20,12 @@ let nextId = 1;
 const uid = () => `id-${nextId++}-${Date.now()}`;
 
 const inputCls =
-  'w-full rounded border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none';
+  'w-full rounded border border-slate-700 bg-slate-800 px-2 py-1.5 text-sm text-slate-100 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none placeholder-slate-500';
 const btnAdd =
   'inline-flex items-center gap-1 rounded bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 transition-colors';
 const btnDel =
-  'p-1 text-slate-400 hover:text-red-500 transition-colors';
-const thCls = 'px-3 py-2 text-left text-xs font-medium text-slate-500 uppercase tracking-wider';
+  'p-1 text-slate-500 hover:text-red-400 transition-colors';
+const thCls = 'px-3 py-2 text-left text-xs font-medium text-slate-400 uppercase tracking-wider';
 const tdCls = 'px-3 py-2';
 
 export default function DataEditor({ data, onChange }: Props) {
@@ -50,20 +50,20 @@ export default function DataEditor({ data, onChange }: Props) {
 
   return (
     <div>
-      <div className="flex border-b border-slate-200">
+      <div className="flex border-b border-slate-700">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={`px-4 py-2.5 text-sm font-medium transition-colors ${
               tab === t.key
-                ? 'border-b-2 border-blue-600 text-blue-600'
-                : 'text-slate-500 hover:text-slate-700'
+                ? 'border-b-2 border-blue-500 text-blue-400'
+                : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             {t.label}
             {t.count > 0 && (
-              <span className="ml-1.5 rounded-full bg-slate-100 px-1.5 py-0.5 text-xs text-slate-600">
+              <span className="ml-1.5 rounded-full bg-slate-800 px-1.5 py-0.5 text-xs text-slate-300">
                 {t.count}
               </span>
             )}
@@ -71,7 +71,7 @@ export default function DataEditor({ data, onChange }: Props) {
         ))}
       </div>
 
-      <div className="mt-3 mb-4 rounded-md bg-slate-50 px-4 py-3 text-xs text-slate-600 leading-relaxed">
+      <div className="mt-3 mb-4 rounded-md bg-slate-800 px-4 py-3 text-xs text-slate-400 leading-relaxed">
         {descriptions[tab]}
       </div>
 
@@ -100,7 +100,7 @@ function DebtEditor({ items, onChange }: { items: SeniorDebt[]; onChange: (v: Se
       {items.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50">
+            <thead className="bg-slate-800/50">
               <tr>
                 <th className={thCls}>Name</th>
                 <th className={thCls}>Holder</th>
@@ -113,7 +113,7 @@ function DebtEditor({ items, onChange }: { items: SeniorDebt[]; onChange: (v: Se
                 <th className={thCls}></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800">
               {items.map((d) => (
                 <tr key={d.id}>
                   <td className={tdCls}><input className={inputCls} value={d.name} onChange={(e) => update(d.id, { name: e.target.value })} placeholder="Term Loan A" /></td>
@@ -149,7 +149,7 @@ function SafeEditor({ items, onChange }: { items: Safe[]; onChange: (v: Safe[]) 
       {items.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50">
+            <thead className="bg-slate-800/50">
               <tr>
                 <th className={thCls}>Investor</th>
                 <th className={thCls}>Investment Amount</th>
@@ -158,7 +158,7 @@ function SafeEditor({ items, onChange }: { items: Safe[]; onChange: (v: Safe[]) 
                 <th className={thCls}></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800">
               {items.map((s) => (
                 <tr key={s.id}>
                   <td className={tdCls}><input className={inputCls} value={s.investorName} onChange={(e) => update(s.id, { investorName: e.target.value })} placeholder="Y Combinator" /></td>
@@ -220,10 +220,10 @@ function PreferredEditor({ items, onChange }: { items: PreferredShare[]; onChang
   return (
     <div className="space-y-3">
       {items.map((p) => (
-        <div key={p.id} className="rounded-lg border border-slate-200 bg-white">
+        <div key={p.id} className="rounded-lg border border-slate-700 bg-slate-900">
           <button
             onClick={() => setExpanded(expanded === p.id ? null : p.id)}
-            className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-200 hover:bg-slate-800"
           >
             <span>{p.className || 'New Preferred Class'} {p.holders.length > 0 && `(${p.holders.reduce((s, h) => s + h.shares, 0).toLocaleString()} shares)`}</span>
             <div className="flex items-center gap-2">
@@ -232,22 +232,22 @@ function PreferredEditor({ items, onChange }: { items: PreferredShare[]; onChang
             </div>
           </button>
           {expanded === p.id && (
-            <div className="border-t border-slate-100 px-4 py-4 space-y-4">
+            <div className="border-t border-slate-700 px-4 py-4 space-y-4">
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Class Name</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Class Name</label>
                   <input className={inputCls} value={p.className} onChange={(e) => update(p.id, { className: e.target.value })} placeholder="Series A" />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Price / Share</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Price / Share</label>
                   <input className={inputCls} type="number" value={p.pricePerShare || ''} onChange={(e) => update(p.id, { pricePerShare: +e.target.value })} />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Liquidation Multiple</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Liquidation Multiple</label>
                   <input className={inputCls} type="number" value={p.liquidationMultiple || ''} onChange={(e) => update(p.id, { liquidationMultiple: +e.target.value })} />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Participation</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Participation</label>
                   <select className={inputCls} value={p.participation} onChange={(e) => update(p.id, { participation: e.target.value as any })}>
                     <option value="non-participating">Non-participating</option>
                     <option value="participating">Participating</option>
@@ -256,16 +256,16 @@ function PreferredEditor({ items, onChange }: { items: PreferredShare[]; onChang
                 </div>
                 {p.participation === 'capped' && (
                   <div>
-                    <label className="mb-1 block text-xs font-medium text-slate-600">Participation Cap (x)</label>
+                    <label className="mb-1 block text-xs font-medium text-slate-400">Participation Cap (x)</label>
                     <input className={inputCls} type="number" value={p.participationCap || ''} onChange={(e) => update(p.id, { participationCap: +e.target.value })} />
                   </div>
                 )}
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Seniority</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Seniority</label>
                   <input className={inputCls} type="number" value={p.seniority || ''} onChange={(e) => update(p.id, { seniority: +e.target.value })} />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-600">Conversion Ratio</label>
+                  <label className="mb-1 block text-xs font-medium text-slate-400">Conversion Ratio</label>
                   <input className={inputCls} type="number" value={p.conversionRatio || ''} onChange={(e) => update(p.id, { conversionRatio: +e.target.value })} />
                 </div>
               </div>
@@ -324,10 +324,10 @@ function CommonEditor({ items, onChange }: { items: CommonShare[]; onChange: (v:
   return (
     <div className="space-y-3">
       {items.map((c) => (
-        <div key={c.id} className="rounded-lg border border-slate-200 bg-white">
+        <div key={c.id} className="rounded-lg border border-slate-700 bg-slate-900">
           <button
             onClick={() => setExpanded(expanded === c.id ? null : c.id)}
-            className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-slate-200 hover:bg-slate-800"
           >
             <span>{c.className || 'Common'} ({c.holders.reduce((s, h) => s + h.shares, 0).toLocaleString()} shares)</span>
             <div className="flex items-center gap-2">
@@ -336,12 +336,12 @@ function CommonEditor({ items, onChange }: { items: CommonShare[]; onChange: (v:
             </div>
           </button>
           {expanded === c.id && (
-            <div className="border-t border-slate-100 px-4 py-4 space-y-3">
+            <div className="border-t border-slate-700 px-4 py-4 space-y-3">
               <div className="w-64">
-                <label className="mb-1 block text-xs font-medium text-slate-600">Class Name</label>
+                <label className="mb-1 block text-xs font-medium text-slate-400">Class Name</label>
                 <input className={inputCls} value={c.className} onChange={(e) => update(c.id, { className: e.target.value })} />
               </div>
-              <h4 className="text-xs font-medium uppercase text-slate-500">Holders</h4>
+              <h4 className="text-xs font-medium uppercase text-slate-400">Holders</h4>
               <div className="space-y-2">
                 {c.holders.map((h, idx) => (
                   <div key={idx} className="flex items-center gap-2">
@@ -374,7 +374,7 @@ function OptionEditor({ items, onChange }: { items: OptionGrant[]; onChange: (v:
       {items.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50">
+            <thead className="bg-slate-800/50">
               <tr>
                 <th className={thCls}>Holder</th>
                 <th className={thCls}>Shares</th>
@@ -383,7 +383,7 @@ function OptionEditor({ items, onChange }: { items: OptionGrant[]; onChange: (v:
                 <th className={thCls}></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800">
               {items.map((o) => (
                 <tr key={o.id}>
                   <td className={tdCls}><input className={inputCls} value={o.holderName} onChange={(e) => update(o.id, { holderName: e.target.value })} placeholder="Employee name" /></td>
@@ -415,7 +415,7 @@ function WarrantEditor({ items, onChange }: { items: WarrantGrant[]; onChange: (
       {items.length > 0 && (
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50">
+            <thead className="bg-slate-800/50">
               <tr>
                 <th className={thCls}>Holder</th>
                 <th className={thCls}>Shares</th>
@@ -423,7 +423,7 @@ function WarrantEditor({ items, onChange }: { items: WarrantGrant[]; onChange: (
                 <th className={thCls}></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800">
               {items.map((w) => (
                 <tr key={w.id}>
                   <td className={tdCls}><input className={inputCls} value={w.holderName} onChange={(e) => update(w.id, { holderName: e.target.value })} placeholder="Warrant holder" /></td>
